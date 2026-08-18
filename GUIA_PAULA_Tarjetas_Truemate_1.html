@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía Paula — Tarjetas Digitales Truemate</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f3f7;color:#1a1a2e;padding:30px 16px}
+.container{max-width:720px;margin:0 auto}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#0d1821,#193251);border-radius:20px;padding:32px;margin-bottom:22px;color:#fff;text-align:center}
+.header h1{font-size:24px;font-weight:800;margin-bottom:6px}
+.header p{font-size:13px;color:#7a9bbf;letter-spacing:1px;text-transform:uppercase}
+.dots{display:flex;justify-content:center;gap:7px;margin-bottom:16px}
+.dot{width:9px;height:9px;border-radius:50%}
+
+/* ALERT BOX */
+.alert{border-radius:14px;padding:16px 18px;margin-bottom:20px;font-size:13.5px;line-height:1.7}
+.alert-red{background:#fff0f0;border-left:5px solid #FF5050;color:#7a0000}
+.alert-blue{background:#e8f1fb;border-left:5px solid #193251;color:#0d2040}
+.alert-green{background:#e8f5e9;border-left:5px solid #27ae60;color:#1b5e20}
+.alert-purple{background:#f3e8fc;border-left:5px solid #7B16B7;color:#3a0066}
+.alert strong{display:block;margin-bottom:4px;font-size:14px}
+
+/* SECTION */
+.section{background:#fff;border-radius:18px;padding:24px;margin-bottom:18px;border:1px solid #e2e8f0}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid #f0f3f7}
+.badge{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0}
+.section-title{font-size:17px;font-weight:700}
+.section-sub{font-size:12px;color:#888;margin-top:2px}
+
+/* STEP */
+.step{display:flex;gap:13px;margin-bottom:15px;align-items:flex-start}
+.step:last-child{margin-bottom:0}
+.snum{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0;margin-top:2px}
+.stitle{font-size:14px;font-weight:600;color:#1a1a2e;margin-bottom:4px}
+.sdesc{font-size:13px;color:#555;line-height:1.65}
+code{background:#f0f4f8;border:1px solid #dde3ec;border-radius:5px;padding:1px 8px;font-family:monospace;font-size:12px;color:#193251;font-weight:600}
+
+/* CHECKLIST */
+.checklist{list-style:none;margin-top:8px}
+.checklist li{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:13px;color:#333;line-height:1.5}
+.checklist li:last-child{border-bottom:none}
+.chk{width:20px;height:20px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;font-size:11px}
+
+/* PROMPT BOX */
+.prompt-box{background:#0d1821;border-radius:14px;padding:20px;position:relative}
+.prompt-label{font-size:10px;font-weight:700;color:#FF5050;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.prompt-text{font-size:13px;color:#c8dae9;line-height:1.9;font-family:'Segoe UI',sans-serif}
+.prompt-text span.var{color:#FF5050;font-weight:700}
+.prompt-text span.opt{color:#7B16B7;font-style:italic}
+.copy-note{margin-top:12px;font-size:11px;color:#3d5a78;text-align:center}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+th{background:#f0f4f8;padding:8px 12px;text-align:left;font-size:11px;font-weight:700;color:#555;letter-spacing:1px;text-transform:uppercase}
+td{padding:9px 12px;border-bottom:1px solid #f0f3f7;color:#333;vertical-align:top}
+td:first-child{font-weight:600;color:#193251;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+
+/* QUICK CARD */
+.quick-ref{background:linear-gradient(135deg,#0d1821,#193251);border-radius:16px;padding:22px;color:#fff}
+.quick-ref h3{font-size:13px;font-weight:700;color:#7ab3d4;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px}
+.qrow{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.qrow:last-child{border-bottom:none}
+.qlabel{font-size:12.5px;color:#7a9bbf}
+.qval{font-size:12.5px;font-weight:600;color:#fff;text-align:right}
+.qval a{color:#FF5050;text-decoration:none}
+
+/* DIVIDER */
+.div{height:1px;background:#e8edf3;margin:6px 0 16px}
+
+@media print{body{background:#fff;padding:10px}.section{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+  <div class="dots">
+    <div class="dot" style="background:#FF5050"></div>
+    <div class="dot" style="background:rgba(255,255,255,.4)"></div>
+    <div class="dot" style="background:#7B16B7"></div>
+  </div>
+  <h1>Guía: Crear Tarjetas Digitales</h1>
+  <p>Para Paula — Truemate Insurance Financial</p>
+</div>
+
+<!-- INTRO ALERT -->
+<div class="alert alert-blue">
+  <strong>¿Qué hace esta guía?</strong>
+  Te explica paso a paso cómo crear la tarjeta digital de cada agente nuevo usando Claude AI, y cómo subirla al hosting para que quede publicada en su propio link personalizado.
+</div>
+
+<!-- PASO 1 -->
+<div class="section">
+  <div class="section-head">
+    <div class="badge" style="background:#193251">1</div>
+    <div>
+      <div class="section-title">Reúne los datos del agente</div>
+      <div class="section-sub">Antes de abrir Claude — recoge toda esta info</div>
+    </div>
+  </div>
+  <ul class="checklist">
+    <li><div class="chk" style="background:#FF5050">📸</div><div><strong>Foto profesional</strong> — buena luz, fondo neutro. Pídela en la mayor resolución posible (la imagen original de cámara, no una captura de pantalla)</div></li>
+    <li><div class="chk" style="background:#193251">👤</div><div><strong>Nombre completo</strong> — exactamente como aparecerá en la tarjeta</div></li>
+    <li><div class="chk" style="background:#7B16B7">💼</div><div><strong>Cargo</strong> — Principal Agent / Insurance Agent / Financial Consultation Coordinator / etc.</div></li>
+    <li><div class="chk" style="background:#FF5050">🔢</div><div><strong>NPN</strong> — número de licencia personal (si tiene). Si no tiene, colocaremos el respaldo de la empresa</div></li>
+    <li><div class="chk" style="background:#193251">📞</div><div><strong>Teléfono</strong> — número con código de país (+1 para EE.UU.)</div></li>
+    <li><div class="chk" style="background:#7B16B7">💬</div><div><strong>WhatsApp</strong> — ¿es el mismo número o diferente?</div></li>
+    <li><div class="chk" style="background:#FF5050">📧</div><div><strong>Email</strong> — su correo @truemategroup.com</div></li>
+    <li><div class="chk" style="background:#193251">📄</div><div><strong>Link de licencias</strong> — si tiene PDF de licencias propias (opcional)</div></li>
+    <li><div class="chk" style="background:#7B16B7">🌐</div><div><strong>Subdominio deseado</strong> — ej: <code>nombre.truemategroup.com</code></div></li>
+    <li><div class="chk" style="background:#FF5050">🖼️</div><div><strong>Imagen de preview</strong> (opcional) — si el agente ya tiene un diseño profesional para usar como imagen de WhatsApp</div></li>
+  </ul>
+</div>
+
+<!-- PASO 2 -->
+<div class="section">
+  <div class="section-head">
+    <div class="badge" style="background:#7B16B7">2</div>
+    <div>
+      <div class="section-title">Abre Claude y usa este prompt</div>
+      <div class="section-sub">Ve a claude.ai — copia y llena los datos en los espacios rojos</div>
+    </div>
+  </div>
+  <div class="prompt-box">
+    <div class="prompt-label">📋 Prompt — copia y completa</div>
+    <div class="prompt-text">
+      Necesito crear la tarjeta digital de un agente de Truemate Insurance Financial. Aquí están los datos:<br><br>
+      • Nombre completo: <span class="var">[NOMBRE COMPLETO]</span><br>
+      • Cargo: <span class="var">[CARGO]</span><br>
+      • NPN: <span class="var">[NPN o escribir "no tiene, respaldado por Truemate"]</span><br>
+      • Teléfono: <span class="var">[+1 XXXXXXXXXX]</span><br>
+      • WhatsApp: <span class="var">[mismo número / o +1 XXXXXXXXXX diferente]</span><br>
+      • Email: <span class="var">[nombre@truemategroup.com]</span><br>
+      • Subdominio: <span class="var">[nombre.truemategroup.com]</span><br>
+      <span class="opt">• Link licencias: [URL del PDF si tiene]</span><br><br>
+      Adjunto la foto del agente. Usa los colores de marca de Truemate: Azul #193251, Fúcsia #FF5050, Morado #7B16B7. Incluye botón de Guardar Contacto (vCard), botón Llamar, botones WhatsApp y Mensaje juntos en una fila, Email, Sitio Web, Facebook y Instagram. El fondo debe ser azul marino #0f1e2e. Genera el archivo index.html listo para subir al hosting.
+    </div>
+    <div class="copy-note">⚠️ Adjunta siempre la foto del agente en el mismo mensaje</div>
+  </div>
+
+  <div class="div"></div>
+
+  <div class="alert alert-purple" style="margin-bottom:0">
+    <strong>Si también necesitas la imagen de preview para WhatsApp:</strong>
+    Después de que Claude entregue el index.html, escribe: <em>"Ahora crea también el preview.jpg para WhatsApp en formato 1200x630, con el diseño de tarjeta estilo profesional con foto a la derecha en marco redondeado, fondo #0d1821, colores de marca Truemate."</em>
+  </div>
+</div>
+
+<!-- PASO 3 -->
+<div class="section">
+  <div class="section-head">
+    <div class="badge" style="background:#FF5050">3</div>
+    <div>
+      <div class="section-title">Descarga los archivos de Claude</div>
+      <div class="section-sub">Siempre recibirás 2 archivos</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#FF5050">1</div>
+    <div>
+      <div class="stitle">Descarga index.html</div>
+      <div class="sdesc">Es la tarjeta digital completa. Verifica que el nombre del archivo sea exactamente <code>index.html</code> — si Claude lo llama diferente (ej: <em>nombre_index.html</em>), renómbralo antes de subir.</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#FF5050">2</div>
+    <div>
+      <div class="stitle">Descarga preview.jpg</div>
+      <div class="sdesc">Es la imagen que aparece al enviar el link por WhatsApp. También debe llamarse exactamente <code>preview.jpg</code>.</div>
+    </div>
+  </div>
+  <div class="alert alert-red" style="margin-top:8px;margin-bottom:0">
+    <strong>⚠️ CRÍTICO — Nombres exactos</strong>
+    Los archivos DEBEN llamarse <code>index.html</code> y <code>preview.jpg</code>. Si tienen otro nombre, el sitio mostrará "Index of /" en vez de la tarjeta.
+  </div>
+</div>
+
+<!-- PASO 4 -->
+<div class="section">
+  <div class="section-head">
+    <div class="badge" style="background:#193251">4</div>
+    <div>
+      <div class="section-title">Crea el subdominio en cPanel</div>
+      <div class="section-sub">Solo la primera vez para cada agente</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#193251">1</div>
+    <div>
+      <div class="stitle">Entra a cPanel</div>
+      <div class="sdesc">Ve a <code>clientes.latinoamericahosting.com.co</code> → inicia sesión → clic en cPanel</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#193251">2</div>
+    <div>
+      <div class="stitle">Dominios → Crear un dominio</div>
+      <div class="sdesc">En el menú busca <strong>Dominios</strong> → <strong>Crear un dominio</strong></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#193251">3</div>
+    <div>
+      <div class="stitle">Escribe el subdominio</div>
+      <div class="sdesc">En el campo Dominio escribe ej: <code>maria.truemategroup.com</code><br>⚠️ NO marques "Compartir raíz de documentos"</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#193251">4</div>
+    <div>
+      <div class="stitle">Clic en Enviar</div>
+      <div class="sdesc">Aparece el mensaje de confirmación. La carpeta se crea automáticamente con el mismo nombre.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PASO 5 -->
+<div class="section">
+  <div class="section-head">
+    <div class="badge" style="background:#27ae60">5</div>
+    <div>
+      <div class="section-title">Sube los archivos al hosting</div>
+      <div class="section-sub">Administrador de Archivos → carpeta del subdominio</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#27ae60">1</div>
+    <div>
+      <div class="stitle">Administrador de Archivos</div>
+      <div class="sdesc">En cPanel busca <strong>Administrador de archivos</strong> → abrirlo</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#27ae60">2</div>
+    <div>
+      <div class="stitle">Entra a la carpeta del agente</div>
+      <div class="sdesc">En el árbol izquierdo busca la carpeta <code>maria.truemategroup.com</code> (el nombre que creaste)</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#27ae60">3</div>
+    <div>
+      <div class="stitle">Clic en "Cargar" y sube los 2 archivos</div>
+      <div class="sdesc">Sube <code>index.html</code> y <code>preview.jpg</code> juntos. Si ya existen archivos anteriores, marca <strong>"Sobrescribir archivos existentes"</strong></div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#27ae60">4</div>
+    <div>
+      <div class="stitle">Verifica los nombres en la carpeta</div>
+      <div class="sdesc">Después de subir, confirma que los archivos se llamen exactamente <code>index.html</code> y <code>preview.jpg</code>. Si no → clic derecho → Cambiar nombre</div>
+    </div>
+  </div>
+  <div class="step">
+    <div class="snum" style="background:#27ae60">5</div>
+    <div>
+      <div class="stitle">Prueba el link en el celular</div>
+      <div class="sdesc">Abre <code>https://maria.truemategroup.com</code> — debe cargar la tarjeta. Si ves "Index of /" → los nombres de los archivos están mal.</div>
+    </div>
+  </div>
+  <div class="alert alert-green" style="margin-top:4px;margin-bottom:0">
+    ✅ ¡Tarjeta publicada y lista para enviar por WhatsApp y SMS!
+  </div>
+</div>
+
+<!-- REFERENCIA RÁPIDA -->
+<div class="quick-ref">
+  <h3>📋 Referencia rápida</h3>
+  <div class="qrow"><span class="qlabel">Hosting</span><span class="qval"><a href="https://clientes.latinoamericahosting.com.co">clientes.latinoamericahosting.com.co</a></span></div>
+  <div class="qrow"><span class="qlabel">Herramienta AI</span><span class="qval"><a href="https://claude.ai">claude.ai</a></span></div>
+  <div class="qrow"><span class="qlabel">Archivos a subir</span><span class="qval">index.html + preview.jpg</span></div>
+  <div class="qrow"><span class="qlabel">⚠️ Nombres EXACTOS</span><span class="qval" style="color:#FF5050">index.html / preview.jpg</span></div>
+  <div class="qrow"><span class="qlabel">Si sale "Index of /"</span><span class="qval">Renombrar archivos</span></div>
+  <div class="qrow"><span class="qlabel">Gregorio Navarro</span><span class="qval">card.truemategroup.com</span></div>
+  <div class="qrow"><span class="qlabel">Cristian Rodriguez</span><span class="qval">card2.truemategroup.com</span></div>
+  <div class="qrow"><span class="qlabel">Fabiola Bermudez</span><span class="qval">fabiola.truemategroup.com</span></div>
+  <div class="qrow"><span class="qlabel">Colores de marca</span><span class="qval">#193251 · #FF5050 · #7B16B7</span></div>
+</div>
+
+</div>
+</body>
+</html>

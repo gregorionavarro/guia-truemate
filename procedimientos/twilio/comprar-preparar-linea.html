@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Twilio · Comprar y preparar una línea | TrueMate</title>
+<style>
+:root{--navy:#0d1821;--blue:#193251;--pink:#FF5050;--purple:#7B16B7;--green:#198754;--bg:#f3f6f9;--text:#182536;--muted:#66788a;--line:#e3e9ef}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}a{text-decoration:none;color:inherit}.wrap{max-width:900px;margin:auto;padding:28px 18px 60px}.back{display:inline-block;margin-bottom:14px;color:var(--blue);font-size:13px;font-weight:700}.hero{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:22px;padding:34px;color:#fff;margin-bottom:22px}.hero small{display:block;color:#9db9d2;text-transform:uppercase;letter-spacing:1.3px;margin-bottom:10px}.hero h1{font-size:30px;line-height:1.15;margin-bottom:8px}.hero p{color:#c4d1dd;line-height:1.6}.pill{display:inline-block;margin-top:15px;padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.09);font-size:12px}.box{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px}.box h2{font-size:18px;margin-bottom:13px}.lead{font-size:14px;color:var(--muted);line-height:1.7}.step{display:grid;grid-template-columns:36px 1fr;gap:12px;padding:14px 0;border-top:1px solid #eef2f5}.step:first-of-type{border-top:0}.num{width:30px;height:30px;border-radius:9px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}.step h3{font-size:15px;margin-bottom:5px}.step p,.step li{font-size:13.5px;color:#536476;line-height:1.65}.step ul{margin:6px 0 0 18px}.path{display:block;margin-top:7px;padding:10px 12px;border-radius:10px;background:#eef3f7;color:var(--blue);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;overflow:auto}.ok{background:#edf8f1;border-left:4px solid var(--green);padding:14px 16px;border-radius:12px;font-size:13.5px;line-height:1.65;color:#28553a}.warn{background:#fff5f5;border-left:4px solid var(--pink);padding:14px 16px;border-radius:12px;font-size:13.5px;line-height:1.65;color:#743535}.check{list-style:none}.check li{padding:8px 0;border-bottom:1px solid #f0f3f6;font-size:13.5px}.check li:last-child{border-bottom:0}.footer{margin-top:24px;text-align:center;font-size:12px;color:#8996a3;line-height:1.7}@media(max-width:560px){.hero{padding:26px 20px}.hero h1{font-size:24px}.box{padding:18px}.wrap{padding:18px 12px 40px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<a class="back" href="../index.html">← Volver al Centro de Procedimientos</a>
+<header class="hero">
+  <small>TrueMate Insurance Group · Procedimiento interno</small>
+  <h1>Twilio: comprar y preparar una línea para CallFluent</h1>
+  <p>Proceso estándar para comprar un número local por estado y dejarlo correctamente preparado antes de conectarlo a una campaña de llamadas.</p>
+  <div class="pill">📞 Voice · SHAKEN/STIR · Voice Integrity · CallFluent</div>
+</header>
+
+<section class="box">
+  <h2>Objetivo</h2>
+  <p class="lead">Cada número nuevo debe quedar asociado al perfil de cumplimiento de TrueMate y registrado en las protecciones de voz antes de usarse en producción. No conectar una línea nueva a CallFluent hasta completar este checklist.</p>
+</section>
+
+<section class="box">
+  <h2>Procedimiento paso a paso</h2>
+
+  <div class="step"><div class="num">1</div><div><h3>Comprar el número</h3><p>En Twilio, compra un número local del estado o región donde se utilizará la campaña.</p><span class="path">Numbers & senders → Phone Numbers → Buy a number</span><ul><li>Country: United States</li><li>Number type: Local</li><li>Capability mínima: Voice</li><li>Preferir una localidad o código de área relacionado con la zona de los leads</li></ul></div></div>
+
+  <div class="step"><div class="num">2</div><div><h3>Seleccionar Voice</h3><p>Si Twilio pregunta qué canal se administrará para compliance, seleccionar <strong>Voice</strong>. Messaging no es necesario si la línea se usará únicamente para llamadas.</p></div></div>
+
+  <div class="step"><div class="num">3</div><div><h3>Agregar al Primary Compliance Profile</h3><p>Antes de SHAKEN/STIR o Voice Integrity, el número debe quedar asociado al perfil empresarial aprobado.</p><span class="path">Trust Hub → Profiles → My first Twilio account → Assigned phone numbers → Add phone numbers</span><p>Seleccionar el número nuevo y confirmar que aparezca en la lista.</p></div></div>
+
+  <div class="step"><div class="num">4</div><div><h3>Agregar a SHAKEN/STIR</h3><p>Usar el registro aprobado existente. No crear un registro nuevo si el actual sigue aprobado.</p><span class="path">Trust Hub → Registrations → SHAKEN/STIR → My first Twilio account → Assigned phone numbers → Add phone numbers</span><p>Seleccionar el nuevo número y agregarlo.</p></div></div>
+
+  <div class="step"><div class="num">5</div><div><h3>Agregar a Voice Integrity</h3><p>Usar el registro aprobado <strong>TrueMate Voice Integrity</strong>.</p><span class="path">Trust Hub → Registrations → Voice Integrity → TrueMate Voice Integrity → Assigned phone numbers → Add phone numbers</span><p>Seleccionar el nuevo número y confirmar que quede asignado.</p></div></div>
+
+  <div class="step"><div class="num">6</div><div><h3>Verificación final en Twilio</h3><p>Antes de continuar, el número debe estar visible en los tres lugares:</p><ul><li>Primary Compliance Profile</li><li>SHAKEN/STIR</li><li>Voice Integrity</li></ul></div></div>
+
+  <div class="step"><div class="num">7</div><div><h3>Conectar a CallFluent</h3><p>Solo después de completar Twilio, duplicar el agente correspondiente en CallFluent y asignarle el número nuevo.</p><ul><li>Mantener el mismo Script</li><li>Mantener las mismas Instructions</li><li>Mantener el mismo webhook de n8n</li><li>Mantener la misma lógica de GHL</li><li>Cambiar el nombre interno del agente y el número asignado</li></ul></div></div>
+
+  <div class="step"><div class="num">8</div><div><h3>Realizar prueba antes de producción</h3><p>Hacer una llamada de prueba y confirmar que el agente correcto, número correcto, webhook, notas, clasificación y automatizaciones funcionan antes de cargar una base grande.</p></div></div>
+</section>
+
+<section class="box">
+  <h2>Reglas operativas</h2>
+  <div class="warn"><strong>No rotar números cada pocas semanas solo para evitar filtros.</strong><br>La estrategia recomendada es mantener números estables por estado o región y agregar capacidad adicional solo cuando el volumen lo justifique.</div>
+  <div style="height:10px"></div>
+  <div class="ok"><strong>Estructura recomendada:</strong><br>Florida → número estable de Florida<br>Texas → número estable de Texas<br>Maryland → número estable de Maryland<br>Agregar un segundo número por estado solo si las métricas y el volumen lo requieren.</div>
+</section>
+
+<section class="box">
+  <h2>Checklist rápido para el asistente</h2>
+  <ul class="check">
+    <li>☐ Comprar número local con Voice</li>
+    <li>☐ Seleccionar Voice en compliance</li>
+    <li>☐ Agregar al Primary Compliance Profile</li>
+    <li>☐ Agregar a SHAKEN/STIR</li>
+    <li>☐ Agregar a TrueMate Voice Integrity</li>
+    <li>☐ Confirmar que aparece en los 3 registros</li>
+    <li>☐ Duplicar/agregar agente en CallFluent</li>
+    <li>☐ Asignar el número correcto</li>
+    <li>☐ Mantener Script, Instructions y webhook aprobados</li>
+    <li>☐ Hacer prueba antes de subir campaña</li>
+  </ul>
+</section>
+
+<section class="box">
+  <h2>Datos que debe registrar cada vez</h2>
+  <p class="lead">Estado / región · número comprado · fecha de compra · agente de CallFluent asignado · fecha de activación · estado de SHAKEN/STIR · estado de Voice Integrity.</p>
+</section>
+
+<div class="footer">TrueMate Insurance Group · Procedimientos internos<br>Última actualización: agosto de 2026</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Centro de Procedimientos | TrueMate Insurance Group</title>
+<style>
+:root{--navy:#0d1821;--blue:#193251;--pink:#FF5050;--purple:#7B16B7;--bg:#f3f6f9;--text:#182536;--muted:#66788a;--line:#e3e9ef}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:1120px;margin:auto;padding:32px 20px 56px}
+.hero{background:linear-gradient(135deg,var(--navy),var(--blue));border-radius:24px;padding:38px;color:white;margin-bottom:28px;box-shadow:0 16px 42px rgba(13,24,33,.16)}
+.brand{font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#9db9d2;margin-bottom:12px}
+.hero h1{font-size:34px;line-height:1.12;margin-bottom:10px}.hero p{color:#c3d1de;max-width:720px;line-height:1.6}
+.badge{display:inline-flex;margin-top:18px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.13);padding:8px 12px;border-radius:999px;font-size:12px;color:#dbe7f1}
+.section-title{font-size:14px;text-transform:uppercase;letter-spacing:1.4px;color:#7a8998;margin:24px 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;min-height:175px;display:flex;flex-direction:column;transition:.18s ease}.card:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(13,24,33,.08)}
+.icon{font-size:28px;margin-bottom:14px}.card h2{font-size:18px;margin-bottom:7px}.card p{font-size:13px;color:var(--muted);line-height:1.55;flex:1}.meta{font-size:12px;margin-top:16px;color:var(--blue);font-weight:700}.live{color:#1f8f55}.soon{color:#8a96a2}
+.footer{margin-top:32px;text-align:center;color:#8795a4;font-size:12px;line-height:1.7}
+@media(max-width:820px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:28px}}@media(max-width:560px){.grid{grid-template-columns:1fr}.wrap{padding:18px 14px 38px}.hero{padding:27px 22px;border-radius:18px}.hero h1{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">TrueMate Insurance Group · Orlando, Florida</div>
+    <h1>Centro de Procedimientos y Operaciones</h1>
+    <p>Guías internas paso a paso para configurar, operar y mantener las herramientas de TrueMate. Este portal será la fuente oficial para que el equipo siga siempre el mismo proceso.</p>
+    <div class="badge">📚 SOP · Guías internas · Operaciones</div>
+  </header>
+
+  <div class="section-title">Herramientas y procedimientos</div>
+  <main class="grid">
+    <a class="card" href="twilio/comprar-preparar-linea.html">
+      <div class="icon">📞</div><h2>Twilio</h2>
+      <p>Comprar y preparar una nueva línea para campañas de CallFluent: Voice, Compliance Profile, SHAKEN/STIR y Voice Integrity.</p>
+      <div class="meta live">● Guía disponible</div>
+    </a>
+    <div class="card"><div class="icon">🤖</div><h2>CallFluent</h2><p>Duplicación de agentes, números por estado, campañas, scripts, instrucciones y pruebas antes de producción.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">⚙️</div><h2>n8n</h2><p>Automatizaciones, webhooks, callbacks, retries, notas y sincronización con GoHighLevel.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">🧩</div><h2>GoHighLevel</h2><p>Pipelines, asignaciones, tareas, oportunidades, Lead Intent, tarjetas digitales y workflows.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">💬</div><h2>WhatsApp</h2><p>Configuración de números, coexistencia, campañas y procesos internos de mensajería.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">📧</div><h2>Email</h2><p>Procedimientos para cuentas, reenvíos, campañas, firmas y administración de correo.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">🚛</div><h2>Trucking</h2><p>Procesos operativos, radicaciones, renovaciones, documentación y seguimiento comercial.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">🩺</div><h2>Salud</h2><p>Campañas, manejo de leads, citas, seguimiento y controles operativos del equipo.</p><div class="meta soon">Próximamente</div></div>
+    <div class="card"><div class="icon">❤️</div><h2>Vida</h2><p>Procedimientos internos para cotizaciones, presentaciones, pólizas, seguimiento y herramientas del agente.</p><div class="meta soon">Próximamente</div></div>
+  </main>
+
+  <div class="footer">TrueMate Insurance Group · Centro interno de procedimientos<br>Actualizar una guía cuando cambie una plataforma o proceso.</div>
+</div>
+</body>
+</html>

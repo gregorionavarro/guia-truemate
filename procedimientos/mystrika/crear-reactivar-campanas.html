@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f1e2e">
+<title>Guía: Crear y Reactivar Campañas en Mystrika | TrueMate</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:#f5f8fb;color:#17212b}.loading{min-height:100vh;display:grid;place-items:center;padding:24px}.card{max-width:620px;background:#fff;border:1px solid #dfe7ee;border-radius:22px;padding:30px;box-shadow:0 12px 35px rgba(15,30,46,.10);text-align:center}.badge{display:inline-block;background:#eef4f9;color:#193251;padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px;margin-bottom:14px}.card h1{font-size:24px;color:#193251;margin:0 0 10px}.card p{color:#667788;line-height:1.6;margin:0}.error{color:#8c2828;margin-top:14px}</style>
+</head>
+<body>
+<div class="loading"><div class="card"><div class="badge">📧 TRUEMATE · MYSTRIKA</div><h1>Cargando guía de campañas…</h1><p>Preparando el procedimiento interno.</p><div id="error" class="error"></div></div></div>
+<script>
+(async()=>{
+  try{
+    if(!('DecompressionStream' in window)) throw new Error('Este navegador necesita una versión más reciente para abrir esta guía.');
+    const response=await fetch('campanas-data.gz',{cache:'no-store'});
+    if(!response.ok) throw new Error('No fue posible cargar el contenido de la guía.');
+    const stream=response.body.pipeThrough(new DecompressionStream('gzip'));
+    const html=await new Response(stream).text();
+    document.open();document.write(html);document.close();
+  }catch(e){document.getElementById('error').textContent=e.message||'No fue posible cargar la guía.';}
+})();
+</script>
+</body>
+</html>

@@ -3,21 +3,36 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0f1e2e">
 <title>Tarjetas Digitales | TrueMate</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Inter,Segoe UI,Arial,sans-serif;background:#f3f6f9;color:#182536}
-.topbar{position:sticky;top:0;z-index:20;background:rgba(243,246,249,.96);backdrop-filter:blur(8px);border-bottom:1px solid #e3e9ef;padding:14px 18px}
-.inner{max-width:1120px;margin:0 auto}
-.back{display:inline-flex;align-items:center;gap:8px;color:#193251;font-size:14px;font-weight:700;text-decoration:none;background:#fff;border:1px solid #dfe6ed;border-radius:10px;padding:10px 14px;box-shadow:0 4px 12px rgba(13,24,33,.05)}
-.back:hover{background:#eef3f7}
-.frame-wrap{height:calc(100vh - 70px)}
-iframe{width:100%;height:100%;border:0;display:block;background:#f3f6f9}
-@media(max-width:560px){.topbar{padding:10px 12px}.back{font-size:13px;padding:9px 12px}.frame-wrap{height:calc(100vh - 60px)}}
+:root{--navy:#0f1e2e;--blue:#193251;--red:#FF5050;--purple:#7B16B7;--line:#dfe7ee;--bg:#f7f9fc}
+*{box-sizing:border-box}html,body{margin:0;padding:0}body{font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(circle at 15% -5%,rgba(123,22,183,.08),transparent 30%),radial-gradient(circle at 90% 0%,rgba(255,80,80,.08),transparent 28%),var(--bg);color:#182536}.topbar{position:sticky;top:0;z-index:30;background:rgba(247,249,252,.94);backdrop-filter:blur(9px);border-bottom:1px solid rgba(223,231,238,.9);padding:14px 20px}.inner{max-width:1120px;margin:0 auto}.back{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:14px;font-weight:800;text-decoration:none;background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px 15px;box-shadow:0 4px 12px rgba(13,24,33,.05)}.back:hover{background:#eef4f9}.hero{max-width:1120px;margin:28px auto 24px;background:linear-gradient(135deg,var(--navy),var(--blue));color:white;padding:58px 50px 54px;border-radius:28px;box-shadow:0 18px 45px rgba(13,24,33,.16);position:relative;overflow:hidden}.hero:after{content:"";position:absolute;width:360px;height:360px;border-radius:50%;right:-120px;top:-180px;background:linear-gradient(135deg,rgba(255,80,80,.34),rgba(123,22,183,.28));filter:blur(2px)}.hero-inner{max-width:900px;position:relative;z-index:1}.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);padding:8px 12px;border-radius:999px;font-weight:800;font-size:13px;letter-spacing:.04em}.hero h1{font-size:clamp(38px,5.6vw,64px);line-height:1.02;margin:20px 0 14px;max-width:930px}.subtitle{font-size:19px;max-width:820px;color:#dfeaf4;margin:0}.hero-note{margin-top:26px;padding:16px 18px;border-left:4px solid var(--red);background:rgba(255,255,255,.09);border-radius:12px;max-width:840px;color:#edf4fa}.hero-note strong{font-weight:800}.frame-shell{max-width:1120px;margin:0 auto;padding:0 20px 60px}.frame-wrap{height:calc(100vh - 120px);min-height:900px;border-radius:24px;overflow:hidden;box-shadow:0 8px 24px rgba(15,30,46,.06)}iframe{width:100%;height:100%;border:0;display:block;background:#f7f9fc}@media(max-width:700px){.topbar{padding:10px 12px}.hero{padding:40px 24px;border-radius:22px;margin:18px 14px 20px}.hero h1{font-size:clamp(34px,11vw,48px)}.frame-shell{padding:0 14px 40px}.frame-wrap{min-height:900px;border-radius:18px}}
 </style>
 </head>
 <body>
 <div class="topbar"><div class="inner"><a class="back" href="../index.html">← Volver al Centro de Procedimientos</a></div></div>
-<div class="frame-wrap"><iframe src="../../index.html" title="Guía Crear Tarjetas Digitales"></iframe></div>
+<header class="hero"><div class="hero-inner"><div class="eyebrow">🪪 TRUEMATE · TARJETAS DIGITALES</div><h1>Guía: Crear Tarjetas Digitales</h1><p class="subtitle">Proceso interno para preparar la información del agente, generar su tarjeta digital y publicarla correctamente en su enlace personalizado.</p><div class="hero-note"><strong>Objetivo:</strong> crear una tarjeta digital profesional y consistente con la marca TrueMate, lista para compartir por WhatsApp, email y otros canales.</div></div></header>
+<div class="frame-shell"><div class="frame-wrap"><iframe id="guideFrame" src="../../index.html" title="Guía Crear Tarjetas Digitales"></iframe></div></div>
+<script>
+const frame=document.getElementById('guideFrame');
+frame.addEventListener('load',()=>{
+  try{
+    const doc=frame.contentDocument||frame.contentWindow.document;
+    const header=doc.querySelector('.header');
+    if(header) header.style.display='none';
+    const style=doc.createElement('style');
+    style.textContent=`
+      body{background:#f7f9fc!important;padding:0 0 30px!important;font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif!important}
+      .container{max-width:1040px!important;padding:0 4px!important}
+      .alert{border-radius:18px!important;padding:20px 22px!important;font-size:15px!important;line-height:1.75!important;box-shadow:0 7px 22px rgba(15,30,46,.04)!important}
+      .section{border-radius:22px!important;padding:26px!important;margin-bottom:18px!important;box-shadow:0 7px 22px rgba(15,30,46,.05)!important}
+      .section-title{font-size:20px!important}.section-sub{font-size:13px!important}.stitle{font-size:15px!important}.sdesc,.checklist li,td{font-size:14px!important}.badge{width:46px!important;height:46px!important;border-radius:14px!important}.prompt-box,.quick-ref{border-radius:18px!important}
+      @media(max-width:700px){.container{padding:0 2px!important}.section{padding:20px!important}}
+    `;
+    doc.head.appendChild(style);
+  }catch(e){}
+});
+</script>
 </body>
 </html>

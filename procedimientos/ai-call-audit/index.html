@@ -462,54 +462,11 @@ html,body{max-width:100%;overflow-x:hidden}
 .report-action b{display:block;margin-bottom:4px;color:#175cd3}
 @media(max-width:800px){.report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
-
-.back-nav{
-  width:100%;
-  background:var(--bg);
-  padding:18px 28px 0;
-}
-.back-nav-inner{
-  max-width:1500px;
-  margin:0 auto;
-}
-.back-nav-link{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding:11px 16px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  background:#fff;
-  color:var(--primary);
-  font-weight:800;
-  font-size:14px;
-  text-decoration:none;
-  box-shadow:0 1px 3px rgba(16,24,40,.04);
-  transition:.18s ease;
-}
-.back-nav-link:hover{
-  background:var(--soft);
-  transform:translateY(-1px);
-}
-@media(max-width:650px){
-  .back-nav{padding:14px 14px 0}
-  .back-nav-link{width:100%;justify-content:center}
-}
-
 </style>
 </head>
 <body>
-
-<div class="back-nav">
-  <div class="back-nav-inner">
-    <a class="back-nav-link" href="../">
-      ← Volver al Centro de Procedimientos
-    </a>
-  </div>
-</div>
-
 <div class="header">
-  <h1>TrueMate AI Call Audit <span style="font-size:14px;opacity:.75">V4.2</span></h1>
+  <h1>TrueMate AI Call Audit <span style="font-size:14px;opacity:.75">V4.3.3</span></h1>
   <p>Auditoría semanal de llamadas de IA — Health Campaign · CallFluent + GHL</p>
 </div>
 
@@ -588,7 +545,7 @@ html,body{max-width:100%;overflow-x:hidden}
         </div>
         <div class="section-actions">
           <button id="testGhlBtn" class="btn3">Probar conexión</button>
-          <button id="batchGhlBtn" class="btn" title="Compara hasta 25 llamadas del filtro actual contra GHL: contacto, nota, tarea y oportunidad.">Auditar hasta 25 en GHL</button>
+          <button id="batchGhlBtn" class="btn" title="Audita las próximas 25 llamadas pendientes del filtro actual. Al volver a pulsarlo continúa con las siguientes 25.">Auditar próximas 25 en GHL</button>
         </div>
       </div>
       <div class="action-explain">Audita las llamadas visibles del filtro actual y compara su registro en GHL.</div>
@@ -606,6 +563,8 @@ html,body{max-width:100%;overflow-x:hidden}
     <div class="card">
       <h2 class="section-title">5. Filtros</h2>
       <div class="toolbar" style="margin-bottom:10px">
+        <button id="todayBtn" class="btn2">Hoy</button>
+        <button id="yesterdayBtn" class="btn2">Ayer</button>
         <button id="last7Btn" class="btn2">Últimos 7 días</button>
         <button id="prevWeekBtn" class="btn2">Semana anterior</button>
         <button id="allDatesBtn" class="btn3">Todo el historial</button>
@@ -685,7 +644,7 @@ html,body{max-width:100%;overflow-x:hidden}
         <div class="metric"><div class="label">Error</div><div id="qaError" class="value">0</div></div>
         <div class="metric"><div class="label">Sin revisar</div><div id="qaPending" class="value">0</div></div>
       </div>
-      <p class="footer-note">V4.2: análisis local del CSV. No escribe en GHL, no entra a n8n y no modifica CallFluent.</p>
+      <p class="footer-note">V4.3.3: análisis local del CSV. No escribe en GHL, no entra a n8n y no modifica CallFluent.</p>
       <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--line)">
         <h3 style="margin:0 0 10px">GHL Sync</h3>
         <div class="ghl-summary-grid">
@@ -995,14 +954,34 @@ function classify(r){
   const st=norm(r.status);
 
   const dnc=/no me llam|no volver a llamar|no lo llam|no llamar|quitar.*lista|stop calling|do not call/.test(s);
-  const callback=/program|reprogram|volver a llamar|llamar nuevamente|nueva llamada|callback|llamara|llame.*manana|llame.*lunes|contact.*mas tarde|contact.*manana|llamar.*a las|contact.*a las/.test(s);
-  const notInterested=/no esta interesad|no interesado|rechaz|sin interes|no desea.*cobertura|no quiere.*cobertura/.test(s);
-  const interested=!notInterested && /mostro interes|interesad[oa]|quiere revisar|desea revisar|acepto revisar|acepta revisar|hablar con.*agente licenciado|agente licenciado.*contact|mostro curiosidad|desea.*opciones|quiere.*opciones/.test(s);
+
+  // Callback: exigir una señal de que el CLIENTE pidió/aceptó el nuevo contacto.
+  // No basta con que el agente haya ofrecido reprogramar.
+  const callback=/solicito (?:que (?:lo|la|le) llamaran|que (?:lo|la|le) llamen|reprogramar|una nueva llamada)|pidio (?:que (?:lo|la|le) llamaran|que (?:lo|la|le) llamen|reprogramar|una nueva llamada)|pidio volver a llamar|solicito volver a llamar|acordo (?:que .*llam|una nueva llamada|reprogramar)|acordaron (?:que .*llam|una nueva llamada|reprogramar)|prefirio (?:que .*llam|reprogramar)|quiere que .*llam|desea que .*llam|llame(?:n)?(?:lo|la|le)?.*(?:manana|lunes|martes|miercoles|jueves|viernes|sabado|domingo|mas tarde|a las|en una hora|en dos horas)|volver a llamar.*(?:cliente|usuario).*(?:solicito|pidio|acepto)|callback solicitado/.test(s);
+
+  // Negativos explícitos primero. Esto evita falsos Interested como
+  // "no estaba interesado" o "no mostró interés".
+  const notInterested=/no (?:esta|estaba|estuvo) interesad[oa]|no interesad[oa]|no me interesa|sin interes|no (?:mostro|muestra|demostro|expreso|manifesto) interes|no (?:quiere|queria|desea|deseaba|necesita|necesitaba).*informacion|no (?:quiere|queria|desea|deseaba).*cambiar|no (?:quiere|queria|desea|deseaba).*cobertura|rechaz|declino|me quedo con mi seguro|estoy bien con mi seguro|esta bien con su seguro|satisfech[oa].*(?:seguro|cobertura)/.test(s);
+
+  const interested=!notInterested && /\b(?:estoy interesad[oa]|me interesa|si me interesa|quiero informacion|quiere informacion|desea informacion|quiero mas informacion|quiere mas informacion|desea mas informacion|solicito mas informacion|pidio mas informacion|quiere revisar|desea revisar|acepto revisar|acepta revisar|quiere revisar beneficios|desea revisar beneficios|mostro interes|muestra interes|expreso interes|manifesto interes|hablar con.*agente licenciado|agente licenciado.*contact)\b/.test(s);
+
   const wrong=/persona incorrecta|numero equivocado|no era.*persona|wrong person/.test(s);
 
-  const machine=/mensaje automatico|buzon|voicemail|correo de voz|maquina|sistema automatico|grabacion automatica/.test(s);
+  // Máquina/voicemail: una frase como "dejar un mensaje" por sí sola NO basta,
+  // porque puede haber contestado un familiar, recepcionista u otra persona real.
+  const machineStrong=/mensaje automatico|buzon|voicemail|correo de voz|sistema automatico|sistema de mensajeria|grabacion automatica|deje su mensaje|mensaje de voz|no se habia grabado|no se grabo (?:nada|el mensaje)|oprima [1-9]|press [1-9]|after the (?:tone|beep)/.test(s);
+
+  const humanProxy=/persona (?:indico|dijo|respondio|informo).*no (?:estaba|se encontraba) disponible|usuario (?:indico|dijo|respondio|informo).*revisaria.*disponibilidad|prometio regresar la llamada|familiar|recepcionista|secretaria|otra persona.*respondio/.test(s);
+
+  const machineHangup=/maquina.*(?:colgo|desconecto|finalizo)|deteccion de maquina|machine.*(?:hang|disconnect)/.test(s);
+
+  const machine=machineStrong || (machineHangup && !humanProxy);
 
   const technical=/problema tecnico|error de desconexion|corte en la linea|se desconecto automaticamente|desconexion automatica|finalizo abruptamente debido a un problema|finalizacion inesperada.*tecnic|corto abruptamente debido a un error|error de deteccion/.test(s);
+
+  // Conversación sin interacción real: saludo/identidad, pero no progresó.
+  // Se trata como retry, no como Interested ni como conversación completada.
+  const noEngagement=!machine && /no se proporciono mas informacion|no se obtuvo mas informacion|no se conto con mas informacion|sin mas informacion proporcionada|sin mas informacion especifica|no se proporciona mas informacion|no se puede detallar el contenido|no se pudo detallar el contenido|la interaccion se detuvo|la conversacion se detuvo|no se obtuvo informacion sobre el motivo de la llamada|no recibio respuesta|no hubo respuesta|sin respuesta del cliente|no further information was provided|no additional information was provided|no further information was obtained|no response from the customer|customer did not respond|conversation did not progress/.test(s);
 
   const timeCue=/\b(hoy|manana|lunes|martes|miercoles|jueves|viernes|sabado|domingo|en \d+ minutos|en una hora|en dos horas|a las \d+|am|pm|por la manana|por la tarde)\b/.test(s);
   const missing=!r.summary || r.summary.trim().length<25;
@@ -1014,12 +993,13 @@ function classify(r){
   else if(st==='blocked') intent='Blocked';
   else if(st==='failed') intent='Failed';
   else if(dnc) intent='Do Not Call';
-  else if(callback) intent='Callback';
-  else if(interested) intent='Interested';
-  else if(notInterested) intent='Not Interested';
-  else if(wrong) intent='Wrong Person';
   else if(machine) intent='Machine / Voicemail';
   else if(technical) intent='Technical Disconnect';
+  else if(noEngagement) intent='No Engagement / Retry';
+  else if(callback) intent='Callback';
+  else if(notInterested) intent='Not Interested';
+  else if(interested) intent='Interested';
+  else if(wrong) intent='Wrong Person';
 
   let product='—';
   if(/hospital/.test(s)) product='Hospitalización';
@@ -1029,14 +1009,15 @@ function classify(r){
 
   let nextAction='No action';
   if(dnc) nextAction='Verify suppression';
+  else if(machine) nextAction='Campaign retry';
+  else if(technical) nextAction='Technical monitoring';
+  else if(noEngagement) nextAction='Campaign retry';
   else if(callback) nextAction='Verify callback in GHL';
   else if(interested) nextAction='Verify opportunity in GHL';
   else if(intent==='Not Interested') nextAction='No sales follow-up';
   else if(intent==='Wrong Person') nextAction='No commercial follow-up';
   else if(intent==='No Answer' || intent==='Busy') nextAction='Campaign retry';
   else if(intent==='Failed' || intent==='Blocked') nextAction='Monitor delivery';
-  else if(machine) nextAction='No QA unless sampled';
-  else if(technical) nextAction='Technical monitoring';
   else nextAction='Review only if sampled';
 
   const alerts=[];
@@ -1048,13 +1029,16 @@ function classify(r){
   const needsReview=alerts.length>0;
 
   const labels=[];
-  if(interested) labels.push('Interested');
-  if(callback) labels.push('Callback');
-  if(!labels.length) labels.push(intent);
+  if(noEngagement) labels.push('No Engagement / Retry');
+  else {
+    if(interested) labels.push('Interested');
+    if(callback) labels.push('Callback');
+    if(!labels.length) labels.push(intent);
+  }
 
   return {
     intent, product, nextAction, needsReview, alerts, technical, machine,
-    interested, callback, dnc, labels
+    interested, callback, dnc, noEngagement, labels
   };
 }
 function parseDate(v){
@@ -1062,9 +1046,48 @@ function parseDate(v){
   return isNaN(d)?null:d;
 }
 
+const OPERATION_TIME_ZONE='America/New_York';
+
 function dateOnly(v){
-  const m=String(v||'').match(/^(\d{4}-\d{2}-\d{2})/);
+  const raw=String(v||'').trim();
+  if(!raw) return '';
+
+  // Si el CSV trae zona/offset (ej. +03:00), convertimos la fecha
+  // al huso operativo de TrueMate antes de filtrar Hoy/Ayer.
+  const d=new Date(raw);
+  if(!isNaN(d)){
+    const parts=new Intl.DateTimeFormat('en-CA',{
+      timeZone:OPERATION_TIME_ZONE,
+      year:'numeric',month:'2-digit',day:'2-digit'
+    }).formatToParts(d);
+    const get=t=>parts.find(p=>p.type===t)?.value||'';
+    const y=get('year'), m=get('month'), day=get('day');
+    if(y&&m&&day) return `${y}-${m}-${day}`;
+  }
+
+  // Fallback para CSV sin zona horaria explícita.
+  const m=raw.match(/^(\d{4}-\d{2}-\d{2})/);
   return m ? m[1] : '';
+}
+
+function currentOperationalDate(){
+  const parts=new Intl.DateTimeFormat('en-CA',{
+    timeZone:OPERATION_TIME_ZONE,
+    year:'numeric',month:'2-digit',day:'2-digit'
+  }).formatToParts(new Date());
+  const get=t=>parts.find(p=>p.type===t)?.value||'';
+  return `${get('year')}-${get('month')}-${get('day')}`;
+}
+
+function formatOperationalDateTime(v){
+  const raw=String(v||'').trim();
+  const d=new Date(raw);
+  if(isNaN(d)) return raw;
+  return new Intl.DateTimeFormat('en-US',{
+    timeZone:OPERATION_TIME_ZONE,
+    year:'numeric',month:'2-digit',day:'2-digit',
+    hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true
+  }).format(d)+' ET';
 }
 
 function addDaysISO(iso, days){
@@ -1077,7 +1100,7 @@ function addDaysISO(iso, days){
 function loadData(data, filename){
   rows=data.map((r,i)=>{
     const c=classify(r);
-    const agent=activeAgent(); return {...r,_agentId:agent?.id||'',_agentName:agent?.name||'',_agentType:agent?.type||'',_campaign:document.getElementById('campaignSelect')?.value||'',_id:i,_intent:c.intent,_product:c.product,_nextAction:c.nextAction,_risk:c.needsReview,_alerts:c.alerts,_technical:c.technical,_machine:c.machine,_interested:c.interested,_callback:c.callback,_dnc:c.dnc,_labels:c.labels,_qa:'',_qaNote:'',_ghl:null,_ghlLoading:false};
+    const agent=activeAgent(); return {...r,_agentId:agent?.id||'',_agentName:agent?.name||'',_agentType:agent?.type||'',_campaign:document.getElementById('campaignSelect')?.value||'',_id:i,_intent:c.intent,_product:c.product,_nextAction:c.nextAction,_risk:c.needsReview,_alerts:c.alerts,_technical:c.technical,_machine:c.machine,_interested:c.interested,_callback:c.callback,_dnc:c.dnc,_noEngagement:c.noEngagement,_labels:c.labels,_qa:'',_qaNote:'',_ghl:null,_ghlLoading:false};
   });
   document.getElementById('dashboard').classList.remove('hidden');
   document.getElementById('fileInfo').textContent=`${filename} — ${rows.length.toLocaleString()} llamadas cargadas`;
@@ -1095,6 +1118,14 @@ function setupDates(mode='last7'){
   if(mode==='all'){
     document.getElementById('dateFrom').value=min;
     document.getElementById('dateTo').value=max;
+  }else if(mode==='today'){
+    const today=currentOperationalDate();
+    document.getElementById('dateFrom').value=today;
+    document.getElementById('dateTo').value=today;
+  }else if(mode==='yesterday'){
+    const y=addDaysISO(currentOperationalDate(),-1);
+    document.getElementById('dateFrom').value=y;
+    document.getElementById('dateTo').value=y;
   }else if(mode==='prevWeek'){
     document.getElementById('dateTo').value=addDaysISO(max,-7);
     document.getElementById('dateFrom').value=addDaysISO(max,-13);
@@ -1117,6 +1148,7 @@ const smartOptions=[
   ['Visión','Visión'],
   ['Do Not Call','Do Not Call'],
   ['Not Interested','Not Interested'],
+  ['No Engagement / Retry','NoEngagement'],
   ['Needs Review','Needs Review'],
   ['Technical','Technical'],
   ['Machine / Voicemail','Machine'],
@@ -1160,6 +1192,7 @@ function applyFilters(){
     if(activeSmart.size){
       for(const f of activeSmart){
         if(f==='Needs Review' && !r._risk) return false;
+        else if(f==='NoEngagement' && !r._noEngagement) return false;
         else if(f==='Technical' && !r._technical) return false;
         else if(f==='Machine' && !r._machine) return false;
         else if(f==='InterestedCallback' && !(r._interested && r._callback)) return false;
@@ -1169,7 +1202,7 @@ function applyFilters(){
         else if(f==='Interested' && !r._interested) return false;
         else if(f==='Callback' && !r._callback) return false;
         else if(f==='Do Not Call' && !r._dnc) return false;
-        else if(!['Needs Review','Technical','Machine','InterestedCallback','Long','Short','Hospitalización','Dental','Visión','Interested','Callback','Do Not Call'].includes(f) && r._intent!==f) return false;
+        else if(!['Needs Review','NoEngagement','Technical','Machine','InterestedCallback','Long','Short','Hospitalización','Dental','Visión','Interested','Callback','Do Not Call'].includes(f) && r._intent!==f) return false;
       }
     }
     return true;
@@ -1202,7 +1235,8 @@ function renderAlerts(arr){
     ['Callback sin hora clara',arr.filter(r=>r._alerts.includes('Callback without clear time')).length,'warn'],
     ['Summary faltante',arr.filter(r=>r._alerts.includes('Missing summary')).length,'bad'],
     ['Technical confirmado',arr.filter(r=>r._technical).length,'info'],
-    ['Machine / Voicemail',arr.filter(r=>r._machine).length,'info']
+    ['Machine / Voicemail',arr.filter(r=>r._machine).length,'info'],
+    ['No Engagement / Retry',arr.filter(r=>r._noEngagement).length,'warn']
   ];
   document.getElementById('alertsBox').innerHTML=items.map(([l,v,c])=>`
     <div class="callout">
@@ -1216,6 +1250,7 @@ function badgeClass(cls){
   if(cls==='Callback') return 'info';
   if(cls==='Do Not Call') return 'bad';
   if(cls==='Not Interested') return 'warn';
+  if(cls==='No Engagement / Retry') return 'warn';
   if(cls==='Failed' || cls==='Technical Disconnect') return 'bad';
   return 'info';
 }
@@ -1332,8 +1367,10 @@ function evaluateGhl(row, data){
       status='Revisar';
       reason=`Hay notas CallFluent, pero no se pudo confirmar esta llamada (similitud ${(similarity*100).toFixed(0)}%)`;
     }else{
-      status='Error confirmado';
-      reason='No se encontró nota de CallFluent para el contacto';
+      // El contacto existe, pero no encontrar una nota no demuestra por sí solo
+      // que el workflow haya fallado. Se envía a revisión humana.
+      status='Revisar';
+      reason='Contacto encontrado, pero no se encontró nota de CallFluent para confirmar esta llamada';
     }
   } else if(exactNote){
     if(row._callback){
@@ -1416,7 +1453,7 @@ async function auditBatchGhl(){
   const candidates=filtered
     .filter(r=>r.phone && !r._ghl)
     .sort((a,b)=>{
-      const score=x=>(x._callback?5:0)+(x._interested?4:0)+(x._risk?3:0)+(x._machine?1:0);
+      const score=x=>(x._callback?6:0)+(x._interested?5:0)+(x._risk?4:0)+(x._noEngagement?2:0)+(x._machine?1:0);
       return score(b)-score(a);
     })
     .slice(0,25);
@@ -1517,7 +1554,7 @@ function renderTable(){
   const body=document.getElementById('tbody');
   body.innerHTML=filtered.slice(0,500).map(r=>`
     <tr>
-      <td>${escapeHtml(r.date)}</td>
+      <td>${escapeHtml(formatOperationalDateTime(r.date))}</td>
       <td>${escapeHtml(r.name)}</td>
       <td>${escapeHtml(r.phone)}</td>
       <td>${escapeHtml(r.duration)}</td>
@@ -1872,6 +1909,8 @@ document.getElementById('resetBtn').onclick=()=>{
   document.querySelectorAll('.tag').forEach(x=>x.classList.remove('active'));
   setupDates('last7'); applyFilters();
 };
+document.getElementById('todayBtn').onclick=()=>{setupDates('today');applyFilters();};
+document.getElementById('yesterdayBtn').onclick=()=>{setupDates('yesterday');applyFilters();};
 document.getElementById('last7Btn').onclick=()=>{setupDates('last7');applyFilters();};
 document.getElementById('prevWeekBtn').onclick=()=>{setupDates('prevWeek');applyFilters();};
 document.getElementById('allDatesBtn').onclick=()=>{setupDates('all');applyFilters();};

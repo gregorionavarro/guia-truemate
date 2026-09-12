@@ -1,0 +1,38 @@
+name: TrueMate · Agregar guía Nuevo Agente IA
+
+on:
+  push:
+    paths:
+      - '.github/workflows/add-new-ai-agent-procedure.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add procedure card
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('procedimientos/index.html')
+          s = p.read_text()
+          s = s.replace('7 guías disponibles', '8 guías disponibles')
+          marker = '''  <div class="card soon">\n    <span class="tag">Automatización</span>\n    <h3>CallFluent + n8n + GHL</h3>'''
+          card = '''  <a class="card" href="nuevo-agente-ia/index.html">\n    <span class="tag">IA · Retell · n8n</span>\n    <h3>Nuevo Agente IA</h3>\n    <p>\n      Crear e integrar un nuevo agente de voz IA en Retell, conectarlo al flujo de n8n,\n      validar Sheet, Dashboard y GHL, y completar el checklist de lanzamiento.\n    </p>\n    <span class="btn">Abrir guía</span>\n  </a>\n\n'''
+          if 'href="nuevo-agente-ia/index.html"' not in s:
+              if marker not in s:
+                  raise SystemExit('No encontré el punto de inserción')
+              s = s.replace(marker, card + marker, 1)
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add procedimientos/index.html
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "Add new AI agent procedure to Procedure Center"
+          git push
